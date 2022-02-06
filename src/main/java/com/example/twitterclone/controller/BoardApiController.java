@@ -2,11 +2,10 @@ package com.example.twitterclone.controller;
 
 import com.example.twitterclone.dto.BoardDTO;
 import com.example.twitterclone.entity.Board;
-import com.example.twitterclone.repository.BoardRepository;
+import com.example.twitterclone.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -33,9 +32,23 @@ public class BoardApiController {
         return ResponseEntity.status(HttpStatus.OK).body(all);
     }
 
+    @PutMapping("/board/{boardId}")
+    public ResponseEntity updateBoard(@PathVariable Long boardId, @Validated @RequestBody BoardDTO.InsUpd boardDTO, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){  //입력값 체크
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult);
+        }
+        boardService.updateBoard(boardId, boardDTO);
+        return ResponseEntity.status(HttpStatus.OK).body("ok");
+    }
 
-
-
+    @DeleteMapping("/board/{boardId}")
+    public ResponseEntity deleteBoard(@PathVariable Long boardId, @Validated @RequestBody BoardDTO.Delete boardDTO, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){  //입력값 체크
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult);
+        }
+        boardService.deleteBoard(boardId, boardDTO);
+        return ResponseEntity.status(HttpStatus.OK).body("ok");
+    }
 
 
 

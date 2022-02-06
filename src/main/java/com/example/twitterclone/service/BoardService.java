@@ -27,6 +27,24 @@ public class BoardService {
         return boardRepository.findAll();
     }
 
+    public void updateBoard(Long boardId, BoardDTO.InsUpd boardDTO){
+        Board board = boardRepository.findById(boardId).orElse(null);
+        if(! board.getPassword().equals(boardDTO.getPassword())){
+            throw new PasswordNotEqualException("패스워드가 일치하지 않습니다.");
+        }
 
+        board.changeContent(boardDTO.getContent());
+        boardRepository.save(board);
+    }
+
+
+    public void deleteBoard(Long boardId, BoardDTO.Delete boardDTO) {
+        Board board = boardRepository.findById(boardId).orElse(null);
+        if(! board.getPassword().equals(boardDTO.getPassword())){
+            throw new PasswordNotEqualException("패스워드가 일치하지 않습니다.");
+        }
+
+        boardRepository.deleteById(board.getId());
+    }
 
 }

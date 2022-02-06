@@ -32,4 +32,9 @@ public class Board {
         this.password = password;
         this.content = content;
     }
+
+
+    public void changeContent(String content){
+        this.content = content;
+    }
 }

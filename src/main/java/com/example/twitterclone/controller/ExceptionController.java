@@ -21,5 +21,13 @@ public class ExceptionController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
-
+    @ExceptionHandler(PasswordNotEqualException.class)  //예외 종류마다 처리할 메서드를 정의한다
+    public ResponseEntity passwordNotEqualExceptionHandler(PasswordNotEqualException exception){
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setField("password");
+        errorResponse.setObjectName("boardDTO");
+        errorResponse.setCode("password.notequal");
+        errorResponse.setDefaultMessage(exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
 }
