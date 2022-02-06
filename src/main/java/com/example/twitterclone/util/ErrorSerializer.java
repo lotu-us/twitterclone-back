@@ -22,10 +22,10 @@ public class ErrorSerializer extends JsonSerializer<Errors> {
                 gen.writeStringField("objectName", e.getObjectName());
                 gen.writeStringField("code", e.getCode());
                 gen.writeStringField("defaultMessage", e.getDefaultMessage());
-                Object rejectedValue = e.getRejectedValue();
-                if (rejectedValue != null) {
-                    gen.writeStringField("rejectedValue",rejectedValue.toString());
-                }
+//                Object rejectedValue = e.getRejectedValue();
+//                if (rejectedValue != null) {
+//                    gen.writeStringField("rejectedValue",rejectedValue.toString());
+//                }
 
                 gen.writeEndObject();
             }catch(IOException e1){
