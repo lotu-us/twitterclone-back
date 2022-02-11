@@ -1,5 +1,6 @@
 package com.example.twitterclone.dto;
 
+import com.example.twitterclone.config.PasswordRegexpConfig;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,6 @@ class BoardDTOTest {
         };
 
         for (String fail : fails) {
-            //System.out.println(passwordCheck(fail));
             Assertions.assertThat(passwordCheck(fail)).isNotNull();
         }
 
@@ -45,6 +45,7 @@ class BoardDTOTest {
     void password1(){
         //조건에 모두 통과한 경우
         Assertions.assertThat(passwordCheck("!a1234")).isNull();
+        Assertions.assertThat(passwordCheck("helloHI")).isNotNull();
     }
 
 
@@ -52,8 +53,9 @@ class BoardDTOTest {
         final int min = 5;
         final int max = 20;
         final String range = min + "," + max; //, 공백없어야함
-        String regexp = "^((?=.*[0-9])(?=.*[a-z])((?=.*\\W)[^ㄱ-ㅎ][^가-힣])(?=\\S+$))*.{"+min+","+max+"}$";
-        //passwordErrorLog(range, pwd);
+        String regexp = PasswordRegexpConfig.reg;
+        System.out.println(passwordErrorLog(range, pwd));
+        System.out.println();
 
         Matcher passMatcher = Pattern.compile(regexp).matcher(pwd);
         if(!passMatcher.find()){
@@ -67,8 +69,7 @@ class BoardDTOTest {
         Map<String, String> map = new HashMap<>();
         map.put("(?=.*[0-9])", "0~9까지 숫자 최소 한개이상 존재해야함");
         map.put("(?=.*[a-z])", "a~z까지 영소문자 최소 한개이상 존재해야함");
-        map.put("((?=.*\\W)[^ㄱ-ㅎ][^가-힣])", "특수문자 최소 한개이상 존재해야함");
-        // \\W : 알파벳이나 숫자를 제외한 문자. => 한글 제외해야함! 따라서 [^ㄱ-ㅎ][^가-힣] 추가해야함
+        map.put("(?=.*[!\"#$%&'()*+,-./:;<=>?@^_`{|}\\[\\]~\\\\])(?=\\S+$)", "특수문자 최소 한개이상 존재해야함");
         map.put("(?=\\S+$)", "공백 허용 안함");
         map.put("^.{"+range+"}$", "글자수 맞지않음");
 
