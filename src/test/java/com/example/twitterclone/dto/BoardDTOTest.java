@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-@SpringBootTest
+
 class BoardDTOTest {
 
     @Test
@@ -39,11 +39,20 @@ class BoardDTOTest {
         Assertions.assertThat(passwordCheck("hello123@!")).isNull();
     }
 
+
+    @Test
+    @DisplayName("비밀번호 정규식 테스트")
+    void password1(){
+        //조건에 모두 통과한 경우
+        Assertions.assertThat(passwordCheck("!a1234")).isNull();
+    }
+
+
     private String passwordCheck(String pwd){
         final int min = 5;
         final int max = 20;
         final String range = min + "," + max; //, 공백없어야함
-        String regexp = "^(?=.*[0-9])(?=.*[a-z])((?=.*\\W)[^ㄱ-ㅎ][^가-힣])(?=\\S+$).{"+range+"}$";
+        String regexp = "^((?=.*[0-9])(?=.*[a-z])((?=.*\\W)[^ㄱ-ㅎ][^가-힣])(?=\\S+$))*.{"+min+","+max+"}$";
         //passwordErrorLog(range, pwd);
 
         Matcher passMatcher = Pattern.compile(regexp).matcher(pwd);
@@ -67,7 +76,7 @@ class BoardDTOTest {
         for (String reg : map.keySet()) {
             Matcher passMatcher = Pattern.compile(reg).matcher(pwd);
             boolean check = passMatcher.find();
-            //System.out.println("input : "+pwd+" / reg : "+ reg+" / "+check);
+            System.out.println("input : "+pwd+" / reg : "+ reg+" / "+check);
 
             if(check == false){ //불만족하는 조건이 있다면
                 result = result + map.get(reg) + ", ";
