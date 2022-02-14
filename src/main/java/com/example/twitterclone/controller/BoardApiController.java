@@ -18,7 +18,7 @@ public class BoardApiController {
     @Autowired private BoardService boardService;
 
     @PostMapping("/board")
-    public ResponseEntity saveBoard(@Validated @RequestBody BoardDTO.InsUpd boardDTO, BindingResult bindingResult){
+    public ResponseEntity saveBoard(@Validated @RequestBody BoardDTO.Insert boardDTO, BindingResult bindingResult){
         if(bindingResult.hasErrors()){  //입력값 체크
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult);   //하단 주석 참고
         }
@@ -33,7 +33,7 @@ public class BoardApiController {
     }
 
     @PutMapping("/board/{boardId}")
-    public ResponseEntity updateBoard(@PathVariable Long boardId, @Validated @RequestBody BoardDTO.InsUpd boardDTO, BindingResult bindingResult){
+    public ResponseEntity updateBoard(@PathVariable Long boardId, @Validated @RequestBody BoardDTO.Update boardDTO, BindingResult bindingResult){
         if(bindingResult.hasErrors()){  //입력값 체크
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult);
         }

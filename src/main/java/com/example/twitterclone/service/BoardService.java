@@ -14,8 +14,12 @@ import java.util.List;
 public class BoardService {
     @Autowired private BoardRepository boardRepository;
 
-    public Long saveBoard(BoardDTO.InsUpd boardDTO){
-        Board board = new Board(boardDTO.getPassword(), boardDTO.getContent());
+    public Long saveBoard(BoardDTO.Insert boardDTO){
+        Board board = Board.builder()
+                .nickname(boardDTO.getNickname())
+                .password(boardDTO.getPassword())
+                .content(boardDTO.getContent())
+                .build();
         boardRepository.save(board);
         if(board.getId() == null){
             throw new DataBaseException("게시글이 저장되지 않았습니다.");
@@ -27,7 +31,7 @@ public class BoardService {
         return boardRepository.findAll();
     }
 
-    public void updateBoard(Long boardId, BoardDTO.InsUpd boardDTO){
+    public void updateBoard(Long boardId, BoardDTO.Update boardDTO){
         Board board = boardRepository.findById(boardId).orElse(null);
         if(! board.getPassword().equals(boardDTO.getPassword())){
             throw new PasswordNotEqualException("패스워드가 일치하지 않습니다.");

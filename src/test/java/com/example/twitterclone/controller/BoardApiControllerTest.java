@@ -39,7 +39,7 @@ class BoardApiControllerTest {
     @DisplayName("작성 성공")
     void save() throws Exception {
         //given
-        BoardDTO.InsUpd boardDTO = new BoardDTO.InsUpd();
+        BoardDTO.Insert boardDTO = new BoardDTO.Insert();
         boardDTO.setPassword("pwd1234@");
         boardDTO.setContent("내용");
         String content = mapper.writeValueAsString(boardDTO);
@@ -60,7 +60,7 @@ class BoardApiControllerTest {
     @DisplayName("작성 실패 - 빈칸 ")
     void saveBlankFail() throws Exception {
         //given
-        BoardDTO.InsUpd boardDTO = new BoardDTO.InsUpd();
+        BoardDTO.Insert boardDTO = new BoardDTO.Insert();
         boardDTO.setPassword("");
         boardDTO.setContent("");
         String content = mapper.writeValueAsString(boardDTO);
@@ -82,7 +82,7 @@ class BoardApiControllerTest {
     @DisplayName("작성 실패 - 내용 100자 이상")
     void saveMaxSizeContentFail() throws Exception {
         //given
-        BoardDTO.InsUpd boardDTO = new BoardDTO.InsUpd();
+        BoardDTO.Insert boardDTO = new BoardDTO.Insert();
         boardDTO.setPassword("pwd1313@");
         boardDTO.setContent("dddddddddd"+"dddddddddd"+"dddddddddd"+"dddddddddd"+"dddddddddd"+
                             "dddddddddd"+"dddddddddd"+"dddddddddd"+"dddddddddd"+"dddddddddd"+"dddddddddd");
@@ -105,7 +105,7 @@ class BoardApiControllerTest {
     void updateFail_PasswordException() throws Exception {
         //given
         Long boardId = beforeSave();
-        BoardDTO.InsUpd boardDTO = new BoardDTO.InsUpd();
+        BoardDTO.Update boardDTO = new BoardDTO.Update();
         boardDTO.setPassword("123pwd#@@");
         boardDTO.setContent("updateContent");
         String content = mapper.writeValueAsString(boardDTO);
@@ -127,7 +127,7 @@ class BoardApiControllerTest {
     void updateSuccess() throws Exception {
         //given
         Long boardId = beforeSave();
-        BoardDTO.InsUpd boardDTO = new BoardDTO.InsUpd();
+        BoardDTO.Update boardDTO = new BoardDTO.Update();
         boardDTO.setPassword("123pwd#");
         boardDTO.setContent("updateContent");
         String content = mapper.writeValueAsString(boardDTO);

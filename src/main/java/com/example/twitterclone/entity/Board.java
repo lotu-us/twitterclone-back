@@ -19,6 +19,10 @@ public class Board {
 
     @Column
     @NotNull
+    private String nickname;
+
+    @Column
+    @NotNull
     private String password;
 
     @Column
@@ -26,9 +30,11 @@ public class Board {
     private String content;
 
     @Builder
-    public Board(String password, String content) {
-        Assert.notNull(password, "글 작성 시 password는 null일 수 없습니다.");
-        Assert.notNull(content, "글 작성 시 content null일 수 없습니다.");
+    public Board(String nickname, String password, String content) {
+        Assert.notNull(nickname, "글 입력 시 nickname은 null일 수 없습니다.");
+        Assert.notNull(password, "글 입력 시 password는 null일 수 없습니다.");
+        Assert.notNull(content, "글 입력 시 content null일 수 없습니다.");
+        this.nickname = nickname;
         this.password = password;
         this.content = content;
     }
