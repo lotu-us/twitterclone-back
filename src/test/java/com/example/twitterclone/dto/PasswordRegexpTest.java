@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 
 
-class BoardDTOTest {
+class PasswordRegexpTest {
 
     @Test
     @DisplayName("비밀번호 정규식 테스트")
