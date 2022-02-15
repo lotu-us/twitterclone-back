@@ -3,6 +3,7 @@ package com.example.twitterclone.controller;
 import com.example.twitterclone.dto.CommentDTO;
 import com.example.twitterclone.entity.Comment;
 import com.example.twitterclone.service.CommentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class CommentApiController {
-    @Autowired private CommentService commentService;
+    private final CommentService commentService;
 
     @PostMapping("/comment/{boardId}")
     public ResponseEntity saveComment(@PathVariable Long boardId, @Validated @RequestBody CommentDTO.Insert commentDTO, BindingResult bindingResult){

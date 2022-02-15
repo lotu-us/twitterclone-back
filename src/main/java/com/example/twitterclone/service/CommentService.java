@@ -7,6 +7,7 @@ import com.example.twitterclone.repository.BoardRepository;
 import com.example.twitterclone.repository.CommentRepository;
 import com.example.twitterclone.util.exception.DataBaseException;
 import com.example.twitterclone.util.exception.PasswordNotEqualException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,11 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+@Transactional
 public class CommentService {
-    @Autowired private BoardRepository boardRepository;
-    @Autowired private CommentRepository commentRepository;
+    private final BoardRepository boardRepository;
+    private final CommentRepository commentRepository;
 
-    @Transactional
     public Long saveComment(Long boardId, CommentDTO.Insert commentDTO) {
         Board board = boardRepository.findById(boardId).orElse(null);
         if(board == null){

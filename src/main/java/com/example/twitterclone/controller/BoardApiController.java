@@ -3,6 +3,7 @@ package com.example.twitterclone.controller;
 import com.example.twitterclone.dto.BoardDTO;
 import com.example.twitterclone.entity.Board;
 import com.example.twitterclone.service.BoardService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class BoardApiController {
-    @Autowired private BoardService boardService;
+    private final BoardService boardService;
 
     @PostMapping("/board")
     public ResponseEntity saveBoard(@Validated @RequestBody BoardDTO.Insert boardDTO, BindingResult bindingResult){
