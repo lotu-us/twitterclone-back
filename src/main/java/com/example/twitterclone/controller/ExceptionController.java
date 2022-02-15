@@ -25,7 +25,7 @@ public class ExceptionController {
     public ResponseEntity passwordNotEqualExceptionHandler(PasswordNotEqualException exception){
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setField("password");
-        errorResponse.setObjectName("boardDTO");
+        errorResponse.setObjectName("");
         errorResponse.setCode("password.notequal");
         errorResponse.setDefaultMessage(exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
