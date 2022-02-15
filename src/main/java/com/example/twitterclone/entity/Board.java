@@ -5,6 +5,8 @@ import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="board")
@@ -14,6 +16,7 @@ public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "board_id")
     //@NotNull          //객체 생성 시 null로 잡혀서 오류발생
     private Long id;
 
@@ -28,6 +31,10 @@ public class Board {
     @Column
     @NotNull
     private String content;
+
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    private List<Comment> comments = new ArrayList<>();
+
 
     @Builder
     public Board(String nickname, String password, String content) {
