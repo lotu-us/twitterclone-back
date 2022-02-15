@@ -30,7 +30,7 @@ class BoardApiControllerTest {
 
 
     Long beforeSave(){
-        Board board = Board.builder().content("testcontent").password("123pwd#").build();
+        Board board = Board.builder().content("testcontent").password("123pwd#").nickname("hello").build();
         boardRepository.save(board);
         return board.getId();
     }
@@ -40,6 +40,7 @@ class BoardApiControllerTest {
     void save() throws Exception {
         //given
         BoardDTO.Insert boardDTO = new BoardDTO.Insert();
+        boardDTO.setNickname("닉네임");
         boardDTO.setPassword("pwd1234@");
         boardDTO.setContent("내용");
         String content = mapper.writeValueAsString(boardDTO);
@@ -61,6 +62,7 @@ class BoardApiControllerTest {
     void saveBlankFail() throws Exception {
         //given
         BoardDTO.Insert boardDTO = new BoardDTO.Insert();
+        boardDTO.setNickname("");
         boardDTO.setPassword("");
         boardDTO.setContent("");
         String content = mapper.writeValueAsString(boardDTO);
@@ -72,8 +74,9 @@ class BoardApiControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
         )
         .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$[?(@.field=='nickname')]defaultMessage").value("닉네임을 입력해주세요."))
         .andExpect(jsonPath("$[?(@.field=='password' && @.code=='NotBlank')]defaultMessage").value("비밀번호를 입력해주세요."))
-        .andExpect(jsonPath("$[?(@.field=='password' && @.code=='Pattern')]defaultMessage").value("비밀번호는 영소문자, 숫자, 특수문자가 1문자 이상 포함되어야하며 5자 이상 20자 이하로 설정해주세요"))
+        .andExpect(jsonPath("$[?(@.field=='password' && @.code=='Pattern')]defaultMessage").value("비밀번호는 영소문자, 숫자, 특수문자가 1문자 이상 포함되어야하며 5자 이상 20자 이하로 설정해주세요."))
         .andExpect(jsonPath("$[?(@.field=='content')]defaultMessage").value("내용을 입력해주세요."))
         .andDo(print());
     }
@@ -83,6 +86,7 @@ class BoardApiControllerTest {
     void saveMaxSizeContentFail() throws Exception {
         //given
         BoardDTO.Insert boardDTO = new BoardDTO.Insert();
+        boardDTO.setNickname("hi");
         boardDTO.setPassword("pwd1313@");
         boardDTO.setContent("dddddddddd"+"dddddddddd"+"dddddddddd"+"dddddddddd"+"dddddddddd"+
                             "dddddddddd"+"dddddddddd"+"dddddddddd"+"dddddddddd"+"dddddddddd"+"dddddddddd");

@@ -1,6 +1,5 @@
 package com.example.twitterclone.service;
 
-import com.example.twitterclone.controller.CommentApiController;
 import com.example.twitterclone.dto.CommentDTO;
 import com.example.twitterclone.entity.Board;
 import com.example.twitterclone.entity.Comment;
@@ -8,21 +7,17 @@ import com.example.twitterclone.repository.BoardRepository;
 import com.example.twitterclone.repository.CommentRepository;
 import com.example.twitterclone.util.exception.DataBaseException;
 import com.example.twitterclone.util.exception.PasswordNotEqualException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -85,7 +80,7 @@ class CommentServiceTest {
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$[?(@.field=='nickname')]defaultMessage").value("닉네임을 입력해주세요."))
         .andExpect(jsonPath("$[?(@.field=='password' && @.code=='NotBlank')]defaultMessage").value("비밀번호를 입력해주세요."))
-        .andExpect(jsonPath("$[?(@.field=='password' && @.code=='Pattern')]defaultMessage").value("비밀번호는 영소문자, 숫자, 특수문자가 1문자 이상 포함되어야하며 5자 이상 20자 이하로 설정해주세요"))
+        .andExpect(jsonPath("$[?(@.field=='password' && @.code=='Pattern')]defaultMessage").value("비밀번호는 영소문자, 숫자, 특수문자가 1문자 이상 포함되어야하며 5자 이상 20자 이하로 설정해주세요."))
         .andExpect(jsonPath("$[?(@.field=='content')]defaultMessage").value("내용을 입력해주세요."))
         .andDo(print());
     }
@@ -101,9 +96,9 @@ class CommentServiceTest {
         Long saveId = commentService.saveComment(board.getId(), commentDTO);
         Assertions.assertThat(saveId).isNotNull();
 
-        List<Comment> comments = commentService.getComments(board.getId());
+        List<CommentDTO.Response> comments = commentService.getComments(board.getId());
         Assertions.assertThat(comments.size()).isEqualTo(2);
-        Assertions.assertThat(comments.get(1).getPassword()).isEqualTo(commentDTO.getPassword());
+        Assertions.assertThat(comments.get(1).getContent()).isEqualTo(commentDTO.getContent());
     }
 
     @Test

@@ -8,7 +8,6 @@ import com.example.twitterclone.repository.CommentRepository;
 import com.example.twitterclone.util.exception.DataBaseException;
 import com.example.twitterclone.util.exception.PasswordNotEqualException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,12 +47,13 @@ public class CommentService {
     }
 
 
-    public List<Comment> getComments(Long boardId) {
+    public List<CommentDTO.Response> getComments(Long boardId) {
         Board board = boardRepository.findById(boardId).orElse(null);
         if(board == null){
             throw new DataBaseException("게시글이 존재하지 않습니다.");
         }
-        List<Comment> comments = board.getComments();
+
+        List<CommentDTO.Response> comments = CommentDTO.convertList(board.getComments());
         return comments;
     }
 

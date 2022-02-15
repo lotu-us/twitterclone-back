@@ -6,7 +6,6 @@ import com.example.twitterclone.repository.BoardRepository;
 import com.example.twitterclone.util.exception.DataBaseException;
 import com.example.twitterclone.util.exception.PasswordNotEqualException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,8 +30,9 @@ public class BoardService {
         return board.getId();
     }
 
-    public List<Board> getBoards() {
-        return boardRepository.findAll();
+    public List<BoardDTO.Response> getBoards() {
+        List<BoardDTO.Response> boards = BoardDTO.convertList(boardRepository.findAll());
+        return boards;
     }
 
     public void updateBoard(Long boardId, BoardDTO.Update boardDTO){

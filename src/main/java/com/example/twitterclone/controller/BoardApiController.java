@@ -1,10 +1,8 @@
 package com.example.twitterclone.controller;
 
 import com.example.twitterclone.dto.BoardDTO;
-import com.example.twitterclone.entity.Board;
 import com.example.twitterclone.service.BoardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -30,8 +28,8 @@ public class BoardApiController {
 
     @GetMapping("/boards")
     public ResponseEntity getBoards(){
-        List<Board> all = boardService.getBoards();
-        return ResponseEntity.status(HttpStatus.OK).body(all);
+        List<BoardDTO.Response> boards = boardService.getBoards();
+        return ResponseEntity.status(HttpStatus.OK).body(boards);
     }
 
     @PutMapping("/board/{boardId}")
