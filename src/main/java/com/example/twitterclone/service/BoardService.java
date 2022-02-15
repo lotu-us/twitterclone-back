@@ -34,7 +34,7 @@ public class BoardService {
     public void updateBoard(Long boardId, BoardDTO.Update boardDTO){
         Board board = boardRepository.findById(boardId).orElse(null);
         if(! board.getPassword().equals(boardDTO.getPassword())){
-            throw new PasswordNotEqualException("패스워드가 일치하지 않습니다.");
+            throw new PasswordNotEqualException();
         }
 
         board.changeContent(boardDTO.getContent());
@@ -45,7 +45,7 @@ public class BoardService {
     public void deleteBoard(Long boardId, BoardDTO.Delete boardDTO) {
         Board board = boardRepository.findById(boardId).orElse(null);
         if(! board.getPassword().equals(boardDTO.getPassword())){
-            throw new PasswordNotEqualException("패스워드가 일치하지 않습니다.");
+            throw new PasswordNotEqualException();
         }
 
         boardRepository.deleteById(board.getId());
