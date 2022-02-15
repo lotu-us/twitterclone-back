@@ -7,6 +7,7 @@ import com.example.twitterclone.util.exception.DataBaseException;
 import com.example.twitterclone.util.exception.PasswordNotEqualException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
 public class BoardService {
     @Autowired private BoardRepository boardRepository;
 
+    @Transactional
     public Long saveBoard(BoardDTO.Insert boardDTO){
         Board board = Board.builder()
                 .nickname(boardDTO.getNickname())
