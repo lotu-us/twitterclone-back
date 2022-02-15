@@ -1,5 +1,6 @@
 package com.example.twitterclone.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.springframework.util.Assert;
 
@@ -33,6 +34,7 @@ public class Board {
     private String content;
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    //@JsonBackReference        //jackson 순환 방지
     private List<Comment> comments = new ArrayList<>();
 
 
@@ -49,5 +51,17 @@ public class Board {
 
     public void changeContent(String content){
         this.content = content;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Board{" +
+                "id=" + id +
+                ", nickname='" + nickname + '\'' +
+                ", password='" + password + '\'' +
+                ", content='" + content + '\'' +
+                ", comments=" + comments +
+                '}';
     }
 }

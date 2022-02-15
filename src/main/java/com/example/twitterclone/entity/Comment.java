@@ -1,5 +1,6 @@
 package com.example.twitterclone.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,8 +33,9 @@ public class Comment {
     @NotNull
     private String password;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
+    //@JsonManagedReference         //jackson 순환 방지
     private Board board;
 
     @Builder
@@ -50,5 +52,15 @@ public class Comment {
 
     public void changeContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", nickname='" + nickname + '\'' +
+                ", content='" + content + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
