@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -27,7 +28,8 @@ public class BoardApiController {
     }
 
     @GetMapping("/boards")
-    public ResponseEntity getBoards(){
+    public ResponseEntity getBoards(HttpServletRequest request){
+        System.out.println("클라이언트 IP : "+request.getRemoteAddr());
         List<BoardDTO.Response> boards = boardService.getBoards();
         return ResponseEntity.status(HttpStatus.OK).body(boards);
     }
