@@ -33,7 +33,7 @@ public class Board {
     @NotNull
     private String content;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     //@JsonBackReference        //jackson 순환 방지
     private List<Comment> comments = new ArrayList<>();
 
