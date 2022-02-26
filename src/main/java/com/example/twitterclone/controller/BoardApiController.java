@@ -29,7 +29,7 @@ public class BoardApiController {
 
     @GetMapping("/boards")
     public ResponseEntity getBoards(HttpServletRequest request){
-        System.out.println("클라이언트 IP : "+request.getRemoteAddr());
+        //System.out.println("클라이언트 IP : "+request.getRemoteAddr());
         List<BoardDTO.Response> boards = boardService.getBoards();
         return ResponseEntity.status(HttpStatus.OK).body(boards);
     }
